@@ -1,0 +1,26 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.Random;
+public class CBasic implements ActionListener {
+	JFrame jf;
+	JLabel lb;
+	CBasic()
+	{
+		jf=new JFrame("Quiz Application");
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setBounds(100,200,700,500);
+		jf.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Lenovo 330\\Downloads\\20860474.jpg")));
+		lb=new JLabel("C++ Programming – Basics");
+		lb.setForeground(Color.black);
+		lb.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 40));
+		lb.setBounds(100,25,500,50);
+		jf.setLayout(null);  
+	    jf.setVisible(true); 
+	    jf.add(lb);
+	}
+	public void actionPerformed(ActionEvent e)
+	{
+		
+	}
+}

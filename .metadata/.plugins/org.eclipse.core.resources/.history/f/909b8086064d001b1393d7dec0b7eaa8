@@ -1,0 +1,11 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.*;
+public class QuizApp implements MouseListener{
+	JFrame jf1;
+	JButton start;
+	JPanel jp1;
+	
+}

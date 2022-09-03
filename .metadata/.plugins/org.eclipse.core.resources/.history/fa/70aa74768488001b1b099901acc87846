@@ -1,0 +1,59 @@
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.DocumentFilter;
+ 
+ 
+public class KeyedMain{
+     
+    /** Creates a new instance of DesMain */
+    public KeyedMain() {
+    }
+     
+    public static void main(String [] rr){
+        DesPanel  mm = new DesPanel();
+        mm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mm.setVisible(true);
+    }
+}
+
+class DocumentSizeFilter extends DocumentFilter {
+    int maxCharacters;
+     
+    public DocumentSizeFilter(int maxChars) {
+        maxCharacters = maxChars;
+    }
+     
+    public void insertString(FilterBypass fb, int offs, String str, AttributeSet a) throws BadLocationException {
+         
+        if ((fb.getDocument().getLength() + str.length()) <= maxCharacters)
+            super.insertString(fb, offs, str, a);
+        else
+            Toolkit.getDefaultToolkit().beep();
+    }
+     
+    public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a) throws BadLocationException {
+         
+        if ((fb.getDocument().getLength() + str.length()- length) <= maxCharacters)
+            super.replace(fb, offs, length, str, a);
+        else
+            Toolkit.getDefaultToolkit().beep();
+    }
+     
+}

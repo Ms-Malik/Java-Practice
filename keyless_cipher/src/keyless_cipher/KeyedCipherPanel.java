@@ -1,0 +1,216 @@
+package keyless_cipher;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+public class KeyedCipherPanel {
+	public static String selectedKey; 
+    public static char sortedKey[]; 
+    public static int sortedKeyPos[]; 
+	private JTextField encryption_PlainText = new JTextField(10);
+	private JTextField encryption_Cipher = new JTextField(10);
+	private JButton encryption_btn = new JButton("Encrypt");
+	
+	private JTextField decryption_PlainText = new JTextField(10);
+	private JTextField decryption_Cipher = new JTextField(10);
+	private JButton decryption_btn = new JButton("Decrypt");
+	
+	private String alphapetic = "abcdefghijklmnopqrstuvwxyz";
+	
+	public KeyedCipherPanel(){
+encryption_btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+//				System.out.print(Encryption(encryption_PlainText.getText().toString(), encryption_Key.getText().toString()));
+				String text = Encryption(encryption_PlainText.getText().toString());
+				encryption_Cipher.setText(text);
+			}
+		});
+		
+		decryption_btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				String text = Decryption(decryption_Cipher.getText().toString());
+				decryption_PlainText.setText(text);
+			}
+		});
+	}
+	
+	public JPanel createPanel(){
+		JPanel Main = new JPanel(new BorderLayout());
+		TitledBorder encryption = BorderFactory.createTitledBorder("Encryption");
+		JPanel encryption_panel = new JPanel(new GridLayout(4,2));
+		encryption_panel.setBorder(encryption);
+		encryption_panel.add(new JLabel("Plain Text"));
+		encryption_panel.add(encryption_PlainText);
+		encryption_panel.add(new JLabel("Key"));
+		encryption_panel.add(new JLabel("Cipher Text"));
+		encryption_panel.add(encryption_Cipher);
+		encryption_panel.add(new JLabel(""));
+		encryption_panel.add(encryption_btn);
+		
+		TitledBorder decryption = BorderFactory.createTitledBorder("Decryption");
+		JPanel decryption_panel = new JPanel(new GridLayout(4,2));
+		decryption_panel.setBorder(decryption);
+		decryption_panel.add(new JLabel("Plain Text"));
+		decryption_panel.add(decryption_PlainText);
+		decryption_panel.add(new JLabel("Key"));
+		decryption_panel.add(new JLabel("Cipher Text"));
+		decryption_panel.add(decryption_Cipher);
+		decryption_panel.add(new JLabel(""));
+		decryption_panel.add(decryption_btn);
+		Main.add(encryption_panel,BorderLayout.NORTH);
+		Main.add(decryption_panel,BorderLayout.SOUTH);
+		return Main;
+	}
+	 public String Encryption(String plainText) 
+	    { 
+	        int min, i, j; 
+	        char orginalKey[] = selectedKey.toCharArray(); 
+	        char temp; 
+	        doProcessOnKey(); 
+	        int row = plainText.length() / selectedKey.length(); 
+	        int extrabit 
+	            = plainText.length() % selectedKey.length(); 
+	        int exrow = (extrabit == 0) ? 0 : 1; 
+	        int rowtemp = -1, coltemp = -1; 
+	        int totallen = (row + exrow) * selectedKey.length(); 
+	        char pmat[][] = new char[(row + exrow)] 
+	                                [(selectedKey.length())]; 
+	        char encry[] = new char[totallen]; 
+	  
+	        int tempcnt = -1; 
+	        row = 0; 
+	  
+	        for (i = 0; i < totallen; i++) { 
+	            coltemp++; 
+	            if (i < plainText.length()) { 
+	                if (coltemp == (selectedKey.length())) { 
+	                    row++; 
+	                    coltemp = 0; 
+	                } 
+	                pmat[row][coltemp] = plainText.charAt(i); 
+	            } 
+	  
+	            else { 
+	  
+	                // Padding can be added between two 
+	                // consecutive alphabets or a group of 
+	                // alphabets of the resultant cipher text 
+	                pmat[row][coltemp] = '-'; 
+	            } 
+	        } 
+	  
+	        int len = -1, k; 
+	  
+	        for (i = 0; i < selectedKey.length(); i++) { 
+	            for (k = 0; k < selectedKey.length(); k++) { 
+	                if (i == sortedKeyPos[k]) { 
+	                    break; 
+	                } 
+	            } 
+	            for (j = 0; j <= row; j++) { 
+	                len++; 
+	                encry[len] = pmat[j][k]; 
+	            } 
+	        } 
+	  
+	        String p1 = new String(encry); 
+	        return (new String(p1)); 
+	    } 
+	  
+	    // Method 3 - doEncryption() 
+	    // To decrypt the targeted string 
+	    public String Decryption(String s) 
+	    { 
+	        int min, i, j, k; 
+	        char key[] = selectedKey.toCharArray(); 
+	        char encry[] = s.toCharArray(); 
+	        char temp; 
+	  
+	        doProcessOnKey(); 
+	  
+	        // Step 4: Generating a plain message 
+	        int row = s.length(); 
+	        selectedKey.length(); 
+	        char pmat[][] 
+	            = new char[row][(selectedKey.length())]; 
+	        int tempcnt = -1; 
+	  
+	        for (i = 0; i < selectedKey.length(); i++) { 
+	            for (k = 0; k < selectedKey.length(); k++) { 
+	                if (i == sortedKeyPos[k]) { 
+	                    break; 
+	                } 
+	            } 
+	  
+	            for (j = 0; j < row; j++) { 
+	                tempcnt++; 
+	                pmat[j][k] = encry[tempcnt]; 
+	            } 
+	        } 
+	  
+	        // Step 5: Storing matrix character in 
+	        // to a single string 
+	        char p1[] = new char[row * selectedKey.length()]; 
+	  
+	        k = 0; 
+	        for (i = 0; i < row; i++) { 
+	            for (j = 0; j < selectedKey.length(); j++) { 
+	                if (pmat[i][j] != '*') { 
+	                    p1[k++] = pmat[i][j]; 
+	                } 
+	            } 
+	        } 
+	  
+	        p1[k++] = '\0'; 
+	        return (new String(p1)); 
+	    } 
+	    public static void doProcessOnKey() 
+	    { 
+	        // Find position of each character in selected key 
+	        // and arranging it in alphabetical order 
+	        int min, i, j; 
+	        char orginalKey[] = selectedKey.toCharArray(); 
+	        char temp; 
+	  
+	        // Step 1: Sorting the array of selected key 
+	        // using nested for loops 
+	        for (i = 0; i < selectedKey.length(); i++) { 
+	            min = i; 
+	            for (j = i; j < selectedKey.length(); j++) { 
+	                if (sortedKey[min] > sortedKey[j]) { 
+	                    min = j; 
+	                } 
+	            } 
+	  
+	            if (min != i) { 
+	                temp = sortedKey[i]; 
+	                sortedKey[i] = sortedKey[min]; 
+	                sortedKey[min] = temp; 
+	            } 
+	        } 
+	  
+	        // Step 2: Filling the position of array 
+	        // according to alphabetical order 
+	        // using nested for loops 
+	        for (i = 0; i < selectedKey.length(); i++) { 
+	            for (j = 0; j < selectedKey.length(); j++) { 
+	                if (orginalKey[i] == sortedKey[j]) 
+	                    sortedKeyPos[i] = j; 
+	            } 
+	        } 
+	    } 
+}
+	  

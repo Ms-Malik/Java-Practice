@@ -1,0 +1,54 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+public class TextBox {
+	JFrame jf;
+	JScrollPane scroll;
+	JTextField tf1;
+	JTextField tf2;
+	JTextField tf3;
+	JLabel lb1;
+	JLabel lb2;
+	JLabel lb3;
+	JButton get_text;
+	JButton decode_password;
+	JPanel mp=new JPanel();
+	TextBox()
+	{
+		jf=new JFrame("TextBox Types");
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setBounds(100,200,1000,1000);
+		lb1=new JLabel("A multiline textbox that \n accepts tabs and return keystrokes");
+		lb1.setBounds(30,40,200,200);
+		tf1=new JTextField();
+		tf1.setBounds(250,40,300,300);
+		scroll = new JScrollPane();
+	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    get_text=new JButton("Get Text");
+	    get_text.setBounds(30,260,120,30);
+	    lb2=new JLabel("Caps only!!!");
+	    lb2.setBounds(30,350,100,30);
+	    tf2=new JTextField();
+	    tf2.setBounds(30,400,150,30);
+	    lb3=new JLabel("Password Box");
+	    lb3.setBounds(200,350,150,30);
+	    decode_password=new JButton();
+	    decode_password.setBounds(400,350,150,30);
+	    tf3=new JTextField();
+	    tf3.setBounds(200,400,300,30);
+	    jf.add(lb1);
+	    tf1.add(scroll);
+	    jf.add(tf1);
+	    jf.add(get_text);
+	    jf.add(lb2);
+	    jf.add(tf2);
+	    jf.add(lb3);
+	    jf.add(decode_password);
+	    jf.add(tf3);
+        jf.setLayout(null);  
+        jf.setVisible(true); 
+	   }
+	 public static void main(String[] args) {  
+	        new TextBox();  
+	    } 
+}

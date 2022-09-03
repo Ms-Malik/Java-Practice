@@ -1,0 +1,15 @@
+import java.util.*;
+public class print {
+	public static void main(String args[])
+	{
+		int ans1=-2+4*3;
+		System.out.println(ans1);
+		int ans2=(52+7)%7;
+		System.out.println(ans2);
+		int ans3=21+ -4*7/9;
+		System.out.println(ans3);
+		int ans4=4+11/4*3-8%3;
+		System.out.println(ans4);
+	}
+}
+

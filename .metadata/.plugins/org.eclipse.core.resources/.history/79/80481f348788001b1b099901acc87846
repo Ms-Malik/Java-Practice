@@ -1,0 +1,241 @@
+package keyless_cipher;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+public class KeyedCipherPanel {
+	 public KeyedCipherPanel(String key, String plain,String Dec) {
+	        keyword=key;
+	        PlainText=plain;
+	        DecKeyWord=Dec;
+	    }
+	    public void UserEntery() {
+	         
+	         
+	        Len=PlainText.length();
+	        if(PlainText.length()%5!=0) {
+	            if(PlainText.length()%5==1) {
+	                 
+	                Len=Len+4;
+	                 
+	            }
+	            if(PlainText.length()%5==2) {
+	                 
+	                Len=Len+3;
+	            }
+	            if(PlainText.length()%5==3) {
+	                 
+	                Len=Len+2;
+	            }
+	            if(PlainText.length()%5==4) {
+	                 
+	                Len=Len+1;
+	            }
+	        }
+	         
+	         
+	         
+	         
+	    }
+	     
+	    public String getCipher(){
+	        return cyphir;
+	         
+	    }
+	     
+	    public String getDecipher(){
+	        return dcyphir;
+	    }
+	     
+	    public void FillMatrix() {
+	        int ROW=Len/5;
+	        int COL=5;
+	        charmatriex=new String[ROW][COL];
+	        String mychar=" ";
+	        String temp=" ";
+	        int startcol=0;
+	        int startrow=0;
+	        for(int i=0; i<Len; i++) {
+	            if(PlainText.length()>i) {
+	                mychar=PlainText.substring(i,i+1);
+	                 
+	                temp+=mychar;
+	                charmatriex[startrow][startcol]=mychar;
+	                 
+	                 
+	                 
+	            } else {
+	                charmatriex[startrow][startcol]="X";
+	            }
+	            if(startcol==4)
+	                startrow++;
+	            startcol=(startcol+1)%5;
+	             
+	        }
+	        System.out.println(" ");
+	        for(int i=0;i<ROW;i++) {
+	             
+	            System.out.print(" | ");
+	            for(int j=0;j<COL;j++) {
+	                if(matrixv==null)
+	                    matrixv=charmatriex[i][j];
+	                else {
+	                    matrixv+=charmatriex[i][j];
+	                     
+	                }
+	                System.out.print(" "+charmatriex[i][j]+" ");
+	            }
+	            System.out.println(" | ");
+	             
+	        }
+	         
+	    }
+	    public void Encrypt() {
+	        int ROW=Len/5;
+	        int COL=5;
+	         
+	        int startcol=0;
+	        int startrow=0;
+	        int startcol1=0;
+	        int startrow1=0;
+	        int keyword_loc;
+	        String sub=" ", sub1=" ";
+	        int index1,index2;
+	         
+	        for(int i=0; i<Len; i++) {
+	             
+	            sub=charmatriex[startrow][startcol];
+	            sub1=keyword.substring(startcol1,startcol1+1);
+	            startcol1++;
+	            keyword_loc=Integer.parseInt(sub1)-1;
+	             
+	             
+	            if(cyphir==null)
+	                cyphir=charmatriex[startrow][keyword_loc];
+	            else
+	                cyphir+=charmatriex[startrow][keyword_loc];
+	             
+	             
+	            if(startcol==4) {
+	                 
+	                startcol1=0;
+	                startrow++;
+	            }
+	             
+	             
+	            startcol=(startcol+1)%5;
+	             
+	             
+	             
+	        }
+	         
+	        System.out.println("The Ciphir Text: "+cyphir);
+	    }
+	    public void FillMatrixdecrypt(){
+	        ROW=Len/5;
+	        COL=5;
+	        charmatriex=new String[ROW][COL];
+	        String mychar=" ";
+	        String temp=" ";
+	        int startcol=0;
+	        int startrow=0;
+	        for(int i=0; i<cyphir.length(); i++) {
+	             
+	            mychar=cyphir.substring(i,i+1);
+	             
+	            temp+=mychar;
+	            charmatriex[startrow][startcol]=mychar;
+	             
+	            if(startcol==4)
+	                startrow++;
+	            startcol=(startcol+1)%5;
+	             
+	        }
+	        for(int i=0;i<ROW;i++) {
+	             
+	            System.out.print(" | ");
+	            for(int j=0;j<COL;j++) {
+	                if(matrixv==null)
+	                    matrixv=charmatriex[i][j];
+	                else {
+	                    matrixv+=charmatriex[i][j];
+	                     
+	                }
+	                System.out.print(" "+charmatriex[i][j]+" ");
+	            }
+	            System.out.println(" | ");
+	             
+	        }
+	         
+	         
+	    }
+	    public void Decrypt() {
+	        keyword=DecKeyWord;
+	        int startcol=0;
+	        int startrow=0;
+	        int startcol1=0;
+	        int startrow1=0;
+	        int keyword_loc;
+	        String[][] temp=new String[ROW][COL];
+	        String sub=" ", sub1=" ";
+	        int index1,index2;
+	        String keywordrep;
+	        keywordrep=Integer.toString(keyword.indexOf("1"));
+	        keywordrep+=Integer.toString(keyword.indexOf("2"));
+	        keywordrep+=Integer.toString(keyword.indexOf("3"));
+	        keywordrep+=Integer.toString(keyword.indexOf("4"));
+	        keywordrep+=Integer.toString(keyword.indexOf("5"));
+	         
+	         
+	        for(int i=0; i<Len; i++) {
+	             
+	            sub=charmatriex[startrow][startcol];
+	            sub1=keywordrep.substring(startcol1,startcol1+1);
+	            startcol1++;
+	            keyword_loc=Integer.parseInt(sub1);
+	             
+	             
+	            if(dcyphir==null)
+	                dcyphir=charmatriex[startrow][keyword_loc];
+	            else
+	                dcyphir+=charmatriex[startrow][keyword_loc];
+	             
+	             
+	            if(startcol==4) {
+	                 
+	                startcol1=0;
+	                startrow++;
+	            }
+	             
+	             
+	            startcol=(startcol+1)%5;
+	             
+	             
+	             
+	        }
+	        //
+	        System.out.println("The Dcipher Text: "+dcyphir);
+	         
+	    }
+	     
+	     
+	     
+	    private  int Len=0;
+	    private String keyword;
+	    private String PlainText;
+	    private String cyphir;
+	    private String [][] charmatriex;
+	    private String matrixv;
+	    private String dcyphir;
+	    private int ROW;
+	    private int COL;
+	    private String DecKeyWord;
+	     
+	}

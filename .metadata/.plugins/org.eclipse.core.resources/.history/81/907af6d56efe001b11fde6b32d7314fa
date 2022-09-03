@@ -1,0 +1,12 @@
+import java.util.*;
+public class print {
+	public static void main(String args[])
+	{
+		int num1=40;
+		int num2=3;
+		int ans=num1/num2;
+		System.out.println(num1+"/"+num2);
+		System.out.println(ans);
+	}
+}
+
